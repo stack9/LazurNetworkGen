@@ -1,0 +1,10 @@
+name: LazurNetworkGen
+version: @version@
+main: it.stack9.lazurnetworkgen.LazurNetworkGen
+api-version: 1.16
+authors: [ stack9 ]
+commands:
+  getgen:
+    usage: /<command> <colore>
+  genremove:
+    usage: /<command> <id>
