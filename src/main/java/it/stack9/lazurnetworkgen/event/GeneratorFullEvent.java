@@ -1,6 +1,7 @@
 package it.stack9.lazurnetworkgen.event;
 
 import it.stack9.lazurnetworkgen.game.Generator;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 
@@ -13,7 +14,7 @@ public class GeneratorFullEvent extends GeneratorEvent {
     }
 
     public Player getOwner() {
-        return generator.getOwner();
+        return Bukkit.getServer().getPlayer(generator.getOwnerId());
     }
 
     @Override

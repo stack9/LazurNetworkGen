@@ -22,7 +22,6 @@ public final class LazurNetworkGen extends JavaPlugin {
     private Map<Integer, Generator> generators;
     private DBManager dbManager;
 
-    @SuppressWarnings("ConstantConditions")
     @Override
     public void onEnable() {
         GENERATORS_KEY = new NamespacedKey(this, "gen");
@@ -33,7 +32,7 @@ public final class LazurNetworkGen extends JavaPlugin {
             e.printStackTrace();
             setEnabled(false);
         }
-        getCommand("getgen").setExecutor(this);
+        getCommand("genget").setExecutor(this);
         getCommand("genremove").setExecutor(this);
         Bukkit.getPluginManager().registerEvents(new WorldListener(this), this);
     }
@@ -85,7 +84,7 @@ public final class LazurNetworkGen extends JavaPlugin {
     }
 
     public void createGenerator(Player owner, Location origin, GeneratorColors color) {
-        Generator gen = Generator.create(this, owner, origin, color.name());
+        Generator gen = Generator.create(this, owner.getUniqueId(), origin, color.name());
         owner.sendMessage("§7Creato generatore #" + gen.getId());
         generators.put(gen.getId(), gen);
     }

@@ -14,6 +14,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitScheduler;
 
+import java.util.UUID;
+
 public class Generator {
 
     private static final int GENERATION_DELAY = 60;
@@ -21,15 +23,15 @@ public class Generator {
 
     private final int id;
     private final Location origin;
-    private final Player owner;
+    private final UUID ownerId;
     private final String color;
     private int level;
     private int taskId;
 
-    public Generator(int id, Location origin, Player owner, String color, int level) {
+    public Generator(int id, Location origin, UUID ownerId, String color, int level) {
         this.id = id;
         this.origin = origin;
-        this.owner = owner;
+        this.ownerId = ownerId;
         this.color = color;
         this.level = level;
     }
@@ -90,8 +92,8 @@ public class Generator {
         return origin;
     }
 
-    public Player getOwner() {
-        return owner;
+    public UUID getOwnerId() {
+        return ownerId;
     }
 
     public int getLevel() {
@@ -114,16 +116,16 @@ public class Generator {
             meta.getPersistentDataContainer().set(LazurNetworkGen.GENERATORS_KEY, PersistentDataType.INTEGER, genColor.ordinal());
             meta.setDisplayName("§r" + genColor.getColorCode() + "Generatore");
             // Set enchanted
-            item.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+            item.addUnsafeEnchantment(Enchantment.LURE, 1);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             item.setItemMeta(meta);
         }
         return item;
     }
 
-    public static Generator create(LazurNetworkGen plugin, Player owner, Location origin, String color) {
+    public static Generator create(LazurNetworkGen plugin, UUID ownerId, Location origin, String color) {
         final int genId = LAST_ID++;
-        final Generator gen = new Generator(genId, origin, owner, color, 0);
+        final Generator gen = new Generator(genId, origin, ownerId, color, 0);
         gen.update();
         gen.start(plugin);
         return gen;

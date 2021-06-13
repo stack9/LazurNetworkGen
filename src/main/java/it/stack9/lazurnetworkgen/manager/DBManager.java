@@ -11,6 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class DBManager {
 
@@ -47,7 +48,7 @@ public class DBManager {
             for (Generator gen : generators.values()) {
                 PreparedStatement stmt = connection.prepareStatement("INSERT INTO lazurnetwork_gens (id, owner, fill_level, color, x, y, z, world) VALUES (?,?,?,?,?,?,?,?)");
                 stmt.setInt(1, gen.getId());
-                stmt.setString(2, gen.getOwner().getUniqueId().toString());
+                stmt.setString(2, gen.getOwnerId().toString());
                 stmt.setInt(3, gen.getLevel());
                 stmt.setInt(4, GeneratorColors.valueOf(gen.getColor()).ordinal());
                 stmt.setDouble(5, gen.getOrigin().getBlockX());
@@ -68,7 +69,7 @@ public class DBManager {
                 Generator gen = new Generator(
                         result.getInt(1),
                         new Location(Bukkit.getWorld(result.getString(8)), result.getDouble(5), result.getDouble(6), result.getDouble(7)),
-                        Bukkit.getServer().getPlayer(result.getString(2)),
+                        UUID.fromString(result.getString(2)),
                         GeneratorColors.fromValue(result.getInt(4)).name(),
                         result.getInt(3)
                 );

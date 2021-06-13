@@ -4,7 +4,9 @@ main: it.stack9.lazurnetworkgen.LazurNetworkGen
 api-version: 1.16
 authors: [ stack9 ]
 commands:
-  getgen:
+  genget:
+    description: Restituisce l'item per creare generatori
     usage: /<command> <colore>
   genremove:
+    description: Rimuove un generatore
     usage: /<command> <id>
