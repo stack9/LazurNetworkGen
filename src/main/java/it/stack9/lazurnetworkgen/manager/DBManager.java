@@ -64,6 +64,7 @@ public class DBManager {
         Map<Integer, Generator> generators = new HashMap<>();
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:" + dbFile.getAbsolutePath())) {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM lazurnetwork_gens");
+            stmt.closeOnCompletion();
             ResultSet result = stmt.executeQuery();
             while (result.next()) {
                 Generator gen = new Generator(
@@ -77,9 +78,13 @@ public class DBManager {
                 gen.start(plugin);
                 generators.put(gen.getId(), gen);
             }
+
+            stmt = connection.prepareStatement("DELETE FROM lazurnetwork_gens WHERE 1");
+            stmt.closeOnCompletion();
+            stmt.executeUpdate();
         }
         if (generators.size() > 0) {
-            Generator.LAST_ID = new ArrayList<>(generators.values()).get(generators.size() - 1).getId();
+            Generator.LAST_ID = new ArrayList<>(generators.values()).get(generators.size() - 1).getId() + 1;
         }
         return generators;
     }

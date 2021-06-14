@@ -22,11 +22,23 @@ public class Builder {
         }
     }
 
-    public static void buildGenerator(Location origin) {
-        buildFilledSquare(origin, 10, Material.BLACK_WOOL);
-        for (int i = 1; i <= 14; i++) {
-            buildSquare(origin.clone().add(1, i, 1), 8, Material.RED_STAINED_GLASS);
+    public static boolean isSpaceFree(Location origin, int l, int height) {
+        Location loc;
+        for (int k = 0; k < height; k++) {
+            for (int i = 0; i < l; i++) {
+                for (int j = 0; j < l; j++) {
+                    loc = origin.clone().add(i, k, j);
+                    if (
+                            loc.getBlockX() != origin.getBlockX() &&
+                            loc.getBlockY() != origin.getBlockY() &&
+                            loc.getBlockZ() != origin.getBlockZ() &&
+                            loc.getBlock().getType() != Material.AIR
+                    ) {
+                        return false;
+                    }
+                }
+            }
         }
-        buildFilledSquare(origin.clone().add(0, 15, 0), 10, Material.BLACK_WOOL);
+        return true;
     }
 }

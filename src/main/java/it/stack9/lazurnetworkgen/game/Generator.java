@@ -124,8 +124,7 @@ public class Generator {
     }
 
     public static Generator create(LazurNetworkGen plugin, UUID ownerId, Location origin, String color) {
-        final int genId = LAST_ID++;
-        final Generator gen = new Generator(genId, origin, ownerId, color, 0);
+        final Generator gen = new Generator(LAST_ID++, origin, ownerId, color, 0);
         gen.update();
         gen.start(plugin);
         return gen;
