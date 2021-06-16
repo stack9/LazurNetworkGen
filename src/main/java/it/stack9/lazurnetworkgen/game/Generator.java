@@ -114,7 +114,7 @@ public class Generator {
         if (meta != null) {
             GeneratorColors genColor = GeneratorColors.valueOf(color.toUpperCase());
             meta.getPersistentDataContainer().set(LazurNetworkGen.GENERATORS_KEY, PersistentDataType.INTEGER, genColor.ordinal());
-            meta.setDisplayName("§r" + genColor.getColorCode() + "Generatore");
+            meta.setDisplayName("§r" + genColor.getCode() + "Generatore - " + genColor.getLabel());
             // Set enchanted
             item.addUnsafeEnchantment(Enchantment.LURE, 1);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
